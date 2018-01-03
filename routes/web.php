@@ -11,18 +11,21 @@
 |
 */
 
+Route::group(['prefix' => 'do'], function() {
+
+    Route::get('/{action}/{name?}', [
+        'uses' => 'NiceActionController@getNiceAction',
+        'as' => 'niceaction'
+    ]);
+
+    Route::post('/', [
+        'uses' => 'NiceActionController@postNiceAction',
+        'as' => 'benice'
+    ]);
+
+});
+
 Route::get('/', function () {
     return view('home');
 })->name('home');
 
-Route::get('/greet/{name?}', function ($name = null) {
-    return view('actions.greet', ['name' => $name]);
-})->name('greet');
-
-Route::get('/hug', function () {
-    return view('actions.hug');
-})->name('hug');
-
-Route::get('/kiss', function () {
-    return view('actions.kiss');
-})->name('kiss');
