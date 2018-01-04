@@ -16,6 +16,15 @@
         <a href="{{ route('niceaction', ['action' => 'hug']) }}">Hug</a>
         <a href="{{ route('niceaction', ['action' => 'kiss']) }}">Kiss</a>
         <br><br>
+        @if (count($errors) > 0)
+            <div>
+                <ul>
+                    @foreach($errors->all() as $error)
+                        {{ $error }}
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <form action="{{ route('benice') }}" method="post">
             <label for="select-action">I want to ...</label>
             <select name="action" id="select-action">
