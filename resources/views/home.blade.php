@@ -12,9 +12,9 @@
                 @endif
             @endfor
         </ul>
-        <a href="{{ route('niceaction', ['action' => 'greet']) }}">Greet</a>
-        <a href="{{ route('niceaction', ['action' => 'hug']) }}">Hug</a>
-        <a href="{{ route('niceaction', ['action' => 'kiss']) }}">Kiss</a>
+        @foreach($actions as $action)
+            <a href="{{ route('niceaction', ['action' => lcfirst($action->name) ]) }}">{{ $action->name }}</a>
+        @endforeach
         <br><br>
         @if (count($errors) > 0)
             <div>
@@ -25,16 +25,19 @@
                 </ul>
             </div>
         @endif
-        <form action="{{ route('benice') }}" method="post">
-            <label for="select-action">I want to ...</label>
-            <select name="action" id="select-action">
-                <option value="greet">Greet</option>
-                <option value="hug">Hug</option>
-                <option value="kiss">Kiss</option>
-            </select>
-            <input type="text" name="name">
+        <form action="{{ route('add_action') }}" method="post">
+            <label for="name">Name of Action:</label>
+            <input id="name" type="text" name="name">
+            <label for="niceness">Niceness:</label>
+            <input id="niceness" type="text" name="niceness">
             <button type="submit">Do a nice action!</button>
             <input type="hidden" value="{{ Session::token() }}" name="_token">
         </form>
+        <br></br>
+        <ul>
+            @foreach($logged_actions as $logged_action)
+                <li>{{ $logged_action->nice_action->name }}</li>
+            @endforeach
+        </ul>
     </div>
 @endsection
